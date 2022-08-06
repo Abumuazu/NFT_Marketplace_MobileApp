@@ -1,22 +1,24 @@
-import { View, Text, SafeAreaView, Image, TextInput } from "react-native";
+import { View, Text, SafeAreaView, Image, TextInput, FlatList } from "react-native";
 import React, { useLayoutEffect } from "react";
 import { ScrollView } from "react-native";
 import { COLORS, NFTData } from "../constants";
-import { NFTCard } from "../components";
+import { FocusedStatusBar, HomeHeader, NFTCard } from "../components";
  
 const HomeScreen = () => {
   const _renderItem= ({ item }) => <NFTCard data={item} />
+  const _ListHeaderComponent = <HomeHeader  />
   return (
     <SafeAreaView style={{ flex: 1 }}>
     <FocusedStatusBar backgroundColor={COLORS.primary} />
+    <NFTCard  />
     <View style={{ flex: 1 }}>
       <View style={{ zIndex: 0 }}>
         <FlatList
-          data={nftData}
+          data={NFTData}
           renderItem={_renderItem}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={<HomeHeader onSearch={handleSearch} />}
+          ListHeaderComponent={_ListHeaderComponent}
         />
       </View>
 

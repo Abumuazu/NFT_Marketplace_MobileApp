@@ -4,7 +4,7 @@ import React from 'react'
 const NFTCard = () => {
   return (
     <View>
-      <Text>NFTCard</Text>
+      <Text style={{color: "#fff"}}>NFTCard</Text>
     </View>
   )
 }
