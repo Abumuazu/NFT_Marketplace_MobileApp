@@ -1,10 +1,72 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import {  Image } from "react-native";
 
-const NFTCard = () => {
+import { COLORS, SIZES, SHADOWS, assets } from "../constants";
+// import { SubInfo, EthPrice, NFTTitle } from "./SubInfo";
+import { RectButton, CircleButton } from "./Button";
+
+const NFTCard = ({ data}) => {
+    console.log(data)
+    console.log( data && data.image)
   return (
-    <View>
-      <Text style={{color: "#fff"}}>NFTCard</Text>
+    <View
+      style={{
+        backgroundColor: COLORS.white,
+        borderRadius: SIZES.font,
+        marginBottom: SIZES.extraLarge,
+        margin: SIZES.base,
+        ...SHADOWS.dark,
+      }}
+    >
+      <View
+        style={{
+          width: "100%",
+          height: 250,
+        }}
+      >
+        <Image
+          source={ data && data.image}
+          resizeMode="cover"
+          style={{
+            width: "100%",
+            height: "100%",
+            borderTopLeftRadius: SIZES.font,
+            borderTopRightRadius: SIZES.font,
+            borderBottomLeftRadius: SIZES.font,
+            borderBottomRightRadius: SIZES.font
+          }}
+        />
+
+        <CircleButton  imgUrl={assets.heart} right={10} top={10} />
+      </View>
+
+      {/* <SubInfo /> */}
+
+      <View style={{ width: "100%", padding: SIZES.font }}>
+        {/* <NFTTitle
+          title={data.name}
+          subTitle={data.creator}
+          titleSize={SIZES.large}
+          subTitleSize={SIZES.small}
+        /> */}
+
+        <View
+          style={{
+            marginTop: SIZES.font,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          {/* <EthPrice price={data.price} /> */}
+          {/* <RectButton
+            minWidth={120}
+            fontSize={SIZES.font}
+            handlePress={() => navigation.navigate("Details", { data })}
+          /> */}
+        </View>
+      </View>
     </View>
   )
 }
