@@ -8,20 +8,14 @@ import { useIsFocused } from "@react-navigation/core";
 // };
 
 
-const FocusedStatusBar = ({backgroundColor, ...props}) => {
-  const isFocused = useIsFocused();
+const FocusedStatusBar = ({backgroundColor, ...props}) =>    (
 
-  if(isFocused){
-    return  (
-
-      <View style={[styles.statusBar, { backgroundColor }]}>
-        <SafeAreaView>
-          <StatusBar translucent  {...props} />
-        </SafeAreaView>
-      </View>
-    ) 
-  } else return null
-}
+  <View style={[styles.statusBar, { backgroundColor }]}>
+    <SafeAreaView>
+      <StatusBar translucent  {...props} />
+    </SafeAreaView>
+  </View>
+) 
 
 
 
