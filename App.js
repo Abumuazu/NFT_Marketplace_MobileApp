@@ -1,7 +1,7 @@
 
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import {createNativeStackNavigator } from "@react-navigation/native-stack"
+import {createStackNavigator } from "@react-navigation/stack"
 import HomeScreen from './screens/Home';
 import Details from './screens/Details';
 import { useFonts } from 'expo-font';
@@ -16,7 +16,7 @@ const theme = {
 };
 
 
-const Stack = createNativeStackNavigator()
+const Stack = createStackNavigator()
 export default function App() {
   //adding fonts 
   const [loaded] = useFonts({

@@ -3,12 +3,11 @@ import React from 'react'
 import {  Image } from "react-native";
 
 import { COLORS, SIZES, SHADOWS, assets } from "../constants";
-// import { SubInfo, EthPrice, NFTTitle } from "./SubInfo";
+import { SubInfo, EthPrice, NFTTitle } from "./SubInfo";
 import { RectButton, CircleButton } from "./Button";
 
-const NFTCard = ({ data}) => {
-    console.log(data)
-    console.log( data && data.image)
+const NFTCard = ({ navigation,data}) => {
+ 
   return (
     <View
       style={{
@@ -41,15 +40,15 @@ const NFTCard = ({ data}) => {
         <CircleButton  imgUrl={assets.heart} right={10} top={10} />
       </View>
 
-      {/* <SubInfo /> */}
+      <SubInfo />
 
       <View style={{ width: "100%", padding: SIZES.font }}>
-        {/* <NFTTitle
-          title={data.name}
-          subTitle={data.creator}
+        <NFTTitle
+          title={ data && data.name}
+          subTitle={ data && data.creator}
           titleSize={SIZES.large}
           subTitleSize={SIZES.small}
-        /> */}
+        />
 
         <View
           style={{
@@ -59,12 +58,12 @@ const NFTCard = ({ data}) => {
             alignItems: "center",
           }}
         >
-          {/* <EthPrice price={data.price} /> */}
-          {/* <RectButton
+          <EthPrice price={ data && data.price} />
+          <RectButton
             minWidth={120}
             fontSize={SIZES.font}
             handlePress={() => navigation.navigate("Details", { data })}
-          /> */}
+          />
         </View>
       </View>
     </View>

@@ -4,13 +4,15 @@ import { ScrollView } from "react-native";
 import { COLORS, NFTData } from "../constants";
 import { FocusedStatusBar, HomeHeader, NFTCard } from "../components";
  
-const HomeScreen = () => {
-  const _renderItem= ({ item }) => <NFTCard data={item} />
+const HomeScreen = ({navigation}) => {
+  const _renderItem= ({ item }) => <NFTCard data={item} navigation={navigation} />
   const _ListHeaderComponent = <HomeHeader  />
   return (
+
+    <>
+        <FocusedStatusBar backgroundColor={COLORS.primary} barStyle="light-content" />
     <SafeAreaView style={{ flex: 1 }}>
-    <FocusedStatusBar backgroundColor={COLORS.primary} />
-    <NFTCard  />
+
     <View style={{ flex: 1 }}>
       <View style={{ zIndex: 0 }}>
         <FlatList
@@ -38,6 +40,7 @@ const HomeScreen = () => {
       </View>
     </View>
   </SafeAreaView>
+  </>
   );
 };
 
