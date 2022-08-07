@@ -5,11 +5,12 @@ import {  Image } from "react-native";
 import { COLORS, SIZES, SHADOWS, assets } from "../constants";
 import { SubInfo, EthPrice, NFTTitle } from "./SubInfo";
 import { RectButton, CircleButton } from "./Button";
+import { SharedElement } from 'react-navigation-shared-element'
+import {  TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-const NFTCard = ({ navigation,data}) => {
- 
+const NFTCard = ({navigation,  data}) => {
   return (
-    <View
+    <TouchableWithoutFeedback
       style={{
         backgroundColor: COLORS.white,
         borderRadius: SIZES.font,
@@ -17,13 +18,16 @@ const NFTCard = ({ navigation,data}) => {
         margin: SIZES.base,
         ...SHADOWS.dark,
       }}
+      onPress={() => navigation.navigate("Details", { data })}
     >
       <View
         style={{
           width: "100%",
           height: 250,
         }}
+       
       >
+        <SharedElement id={data && data.id}>
         <Image
           source={ data && data.image}
           resizeMode="cover"
@@ -36,6 +40,8 @@ const NFTCard = ({ navigation,data}) => {
             borderBottomRightRadius: SIZES.font
           }}
         />
+        </SharedElement>
+    
 
         <CircleButton  imgUrl={assets.heart} right={10} top={10} />
       </View>
@@ -66,7 +72,7 @@ const NFTCard = ({ navigation,data}) => {
           />
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   )
 }
 

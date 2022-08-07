@@ -1,10 +1,12 @@
-
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import {createStackNavigator } from "@react-navigation/stack"
 import HomeScreen from './screens/Home';
 import Details from './screens/Details';
-import { useFonts } from 'expo-font';
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
+import 'react-native-gesture-handler';
+
 
 //theme 
 const theme = {
@@ -16,32 +18,27 @@ const theme = {
 };
 
 
-const Stack = createStackNavigator()
-export default function App() {
-  //adding fonts 
-  const [loaded] = useFonts({
-    InterBold: require("./assets/fonts/Inter-Bold.ttf"),
-    InterSemiBold: require("./assets/fonts/Inter-SemiBold.ttf"),
-    InterMedium: require("./assets/fonts/Inter-Medium.ttf"),
-    InterRegular: require("./assets/fonts/Inter-Regular.ttf"),
-    InterLight: require("./assets/fonts/Inter-Light.ttf"),
-  });
 
-  if(!loaded) return null
+const Stack = createSharedElementStackNavigator()
+export default function App() {
+
   return (
     <NavigationContainer theme={theme}>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-        initialRouteName="Home"
-      >
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={Details} />
-      </Stack.Navigator>
-    </NavigationContainer>
- 
-  );
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            cardStyleInterpolator:  ({current: {progress}}) => {
+              return {cardStyle: {opacity: progress}}
+            }
+          }}
+          initialRouteName="Home"
+        >
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Details" component={Details} />
+        </Stack.Navigator>
+      </NavigationContainer>
+   )
+
 }
 
 const styles = StyleSheet.create({

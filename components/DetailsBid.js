@@ -32,7 +32,8 @@ const DetailsBid = ({ bid }) => {
       >
         <Text
           style={{
-            fontFamily: FONTS.semiBold,
+            // fontFamily: FONTS.semiBold,
+            fontWeight: "700",
             fontSize: SIZES.small,
             color: COLORS.primary,
           }}
@@ -41,7 +42,8 @@ const DetailsBid = ({ bid }) => {
         </Text>
         <Text
           style={{
-            fontFamily: FONTS.regular,
+            // fontFamily: FONTS.regular,
+            fontWeight: "500",
             fontSize: SIZES.small - 2,
             color: COLORS.secondary,
             marginTop: 3,

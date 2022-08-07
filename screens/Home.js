@@ -53,8 +53,8 @@ const HomeScreen = ({navigation}) => {
         }}
       >
         <View
-          style={{ height: 300, backgroundColor: COLORS.primary }} />
-        <View style={{ flex: 1, backgroundColor: COLORS.white }} />
+          style={{ height: 300, backgroundColor: COLORS && COLORS.primary }} />
+        <View style={{ flex: 1, backgroundColor:COLORS && COLORS.white }} />
       </View>
     </View>
   </SafeAreaView>
@@ -63,3 +63,4 @@ const HomeScreen = ({navigation}) => {
 };
 
 export default HomeScreen;
+

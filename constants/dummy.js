@@ -17,6 +17,7 @@ const NFTData = [
         image: assets.person02,
         date: "December 12, 2019 at 12:10 PM",
       },
+
       {
         id: "BID-12",
         name: "Jennifer Sia",
@@ -30,6 +31,34 @@ const NFTData = [
         price: 4.75,
         image: assets.person04,
         date: "December 31, 2019 at 3:50 PM",
+      },
+      {
+        id: "BID-14",
+        name: "Jessica Tan",
+        price: 4.25,
+        image: assets.person02,
+        date: "December 12, 2019 at 12:10 PM",
+      },
+      {
+        id: "BID-15",
+        name: "Jessica Tan",
+        price: 4.25,
+        image: assets.person02,
+        date: "December 12, 2019 at 12:10 PM",
+      },
+      {
+        id: "BID-16",
+        name: "Jessica Tan",
+        price: 4.25,
+        image: assets.person02,
+        date: "December 12, 2019 at 12:10 PM",
+      },
+      {
+        id: "BID-17",
+        name: "Jessica Tan",
+        price: 4.25,
+        image: assets.person02,
+        date: "December 12, 2019 at 12:10 PM",
       },
     ],
   },

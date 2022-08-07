@@ -1,17 +1,44 @@
 import React from "react";
-import { View, Text, SafeAreaView, Image, StatusBar, FlatList, Platform } from "react-native";
-
+import { View, Text, SafeAreaView, Image, StatusBar, FlatList, Platform, Dimensions } from "react-native";
 import { COLORS, SIZES, assets, SHADOWS, FONTS } from "../constants";
 import { CircleButton, RectButton, SubInfo, DetailsDesc, DetailsBid, FocusedStatusBar } from "../components";
+import { SharedElement } from 
+"react-navigation-shared-element";
+import { PanGestureHandler, State } from "react-native-gesture-handler";
+import {
+  onGestureEvent,
+  snapPoint,
+  timing,
+  useValues
+} from "react-native-redash";
+import Animated, {
+  Extrapolate,
+  and,
+  block,
+  call,
+  cond,
+  eq,
+  interpolate,
+  set,
+  useCode,
+} from "react-native-reanimated";
+import { useMemoOne } from "use-memo-one";
+const { width, height } = Dimensions.get("window");
+
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
-const Height = Platform.OS === 'ios' ? StatusBar.currentHeight + 50 : StatusBar.currentHeight + 10 
+const Height = Platform.OS === 'ios' ? StatusBar.currentHeight + 40 : StatusBar.currentHeight + 30 
+
+//Detail Header
 const DetailsHeader = ({ data, navigation }) => (
   <View style={{ width: "100%", height: 373 }}>
+    <SharedElement id={data && data.id}>
     <Image
       source={data && data.image}
       resizeMode="cover"
       style={{ width: "100%", height: "100%" }}
     />
+    </SharedElement>
+ 
 
     <CircleButton
       imgUrl={assets.left}
@@ -28,16 +55,74 @@ const DetailsHeader = ({ data, navigation }) => (
   </View>
 );
 
+// const useValues = Animated.Value; 
 const Details = ({ route, navigation }) => {
-  const { data } = route.params;
+  
+  const { data } = route?.params;
+
+  //extraction using UseValues from react-native-redash package
+  const [
+    translationX,
+    translationY,
+    velocityY,
+    translateX,
+    translateY,
+    snapBack,
+    state,
+  ] = useValues(0, 0, 0, 0, 0, 0, State.UNDETERMINED);
+  //where
+  const snapTo = snapPoint(translationY, velocityY, [0, height]);
+  // scale
+  // const scale = interpolate(translateY, {
+  //   inputRange: [0, height / 2],
+  //   outputRange: [1, 0.75],
+  //   extrapolate: Extrapolate.CLAMP,
+  // });
+
+// using the useMemo Package
+const gestureHandler = useMemoOne(
+  () => onGestureEvent({ translationX, translationY, velocityY, state }),
+  [state, translationX, translationY, velocityY]
+);
+// usong useCode from reAnimated
+useCode(
+  () =>
+    block([
+      cond(
+        and(eq(state, State.END), eq(snapTo, height), eq(snapBack, 0)),
+        set(snapBack, 1)
+      ),
+      cond(
+        snapBack,
+        call([], () => goBack()),
+        cond(
+          eq(state, State.END),
+          [
+            set(
+              translateX,
+              timing({ from: translationX, to: 0, duration: 250 })
+            ),
+            set(
+              translateY,
+              timing({ from: translationY, to: 0, duration: 250 })
+            ),
+          ],
+          [set(translateX, translationX), set(translateY, translationY)]
+        )
+      ),
+    ]),
+  []
+);
 
   return (
-   <>
-
-
-         <View
+   <View style={{ flex: 1, backgroundColor: "#fff"}}>
+<PanGestureHandler {...gestureHandler} >
+  <Animated.View
+  style={{ flex: 1, backgroundColor: "#fff", transform: [{ translateX }, { translateY }],}}
+  >
+  <View
         style={{
-          flex: 1,
+         
           width: "100%",
           position: "absolute",
           bottom: 0,
@@ -72,7 +157,7 @@ const Details = ({ route, navigation }) => {
                 <Text
                   style={{
                     fontSize: SIZES.font,
-                    fontFamily: FONTS.semiBold,
+                    // fontFamily: FONTS && FONTS.semiBold,
                     color: COLORS.primary,
                   }}
                 >
@@ -83,8 +168,14 @@ const Details = ({ route, navigation }) => {
           </React.Fragment>
         )}
       />
-   </>
+  </Animated.View>
+</PanGestureHandler>
+   </View>
   );
 };
 
+Details.sharedElements = ({route}) => {
+  const {data} = route?.params // "pizza"
+  return [data.id]
+}
 export default Details;
