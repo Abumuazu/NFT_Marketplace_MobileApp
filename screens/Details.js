@@ -11,17 +11,21 @@ import {
   timing,
   useValues
 } from "react-native-redash";
-import Animated, {
-  Extrapolate,
-  and,
-  block,
-  call,
-  cond,
-  eq,
-  interpolate,
-  set,
-  useCode,
-} from "react-native-reanimated";
+// import Animated, {
+//   Extrapolate,
+//   and,
+//   block,
+//   call,
+//   cond,
+//   eq,
+//   interpolateNode,
+//   set,
+//   useCode,
+//   Easing as OldEasing,
+//   // @ts-ignore
+//   EasingNode,
+//   useAnimatedGestureHandler,
+// } from "react-native-reanimated";
 import { useMemoOne } from "use-memo-one";
 const { width, height } = Dimensions.get("window");
 
@@ -60,67 +64,63 @@ const Details = ({ route, navigation }) => {
   
   const { data } = route?.params;
 
-  //extraction using UseValues from react-native-redash package
-  const [
-    translationX,
-    translationY,
-    velocityY,
-    translateX,
-    translateY,
-    snapBack,
-    state,
-  ] = useValues(0, 0, 0, 0, 0, 0, State.UNDETERMINED);
-  //where
-  const snapTo = snapPoint(translationY, velocityY, [0, height]);
-  // scale
-  // const scale = interpolate(translateY, {
-  //   inputRange: [0, height / 2],
-  //   outputRange: [1, 0.75],
-  //   extrapolate: Extrapolate.CLAMP,
-  // });
+//   //extraction using UseValues from react-native-redash package
+//   const [
+//     translationX,
+//     translationY,
+//     velocityY,
+//     translateX,
+//     translateY,
+//     snapBack,
+//     state,
+//   ] = useValues(0, 0, 0, 0, 0, 0, State.UNDETERMINED);
+//   //where
+//   const snapTo = snapPoint(translationY, velocityY, [0, height]);
+//   // scale
+//   const scale = interpolateNode(translateY, {
+//     inputRange: [0, height / 2],
+//     outputRange: [1, 0.75],
+//     extrapolate: Extrapolate.CLAMP,
+//   });
 
-// using the useMemo Package
-const gestureHandler = useMemoOne(
-  () => onGestureEvent({ translationX, translationY, velocityY, state }),
-  [state, translationX, translationY, velocityY]
-);
-// usong useCode from reAnimated
-useCode(
-  () =>
-    block([
-      cond(
-        and(eq(state, State.END), eq(snapTo, height), eq(snapBack, 0)),
-        set(snapBack, 1)
-      ),
-      cond(
-        snapBack,
-        call([], () => goBack()),
-        cond(
-          eq(state, State.END),
-          [
-            set(
-              translateX,
-              timing({ from: translationX, to: 0, duration: 250 })
-            ),
-            set(
-              translateY,
-              timing({ from: translationY, to: 0, duration: 250 })
-            ),
-          ],
-          [set(translateX, translationX), set(translateY, translationY)]
-        )
-      ),
-    ]),
-  []
-);
+// // using the useMemo Package
+// const gestureHandler = useMemoOne(
+//   () => onGestureEvent({ translationX, translationY, velocityY, state }),
+//   [state, translationX, translationY, velocityY]
+// );
+// // usong useCode from reAnimated
+// useCode(
+//   () =>
+//     block([
+//       cond(
+//         and(eq(state, State.END), eq(snapTo, height), eq(snapBack, 0)),
+//         set(snapBack, 1)
+//       ),
+//       cond(
+//         snapBack,
+//         call([], () => navigation.navigate('Home')),
+//         cond(
+//           eq(state, State.END),
+//           [
+//             set(
+//               translateX,
+//               timing({ from: translationX, to: 0, duration: 250 })
+//             ),
+//             set(
+//               translateY,
+//               timing({ from: translationY, to: 0, duration: 250 })
+//             ),
+//           ],
+//           [set(translateX, translationX), set(translateY, translationY)]
+//         )
+//       ),
+//     ]),
+//   []
+// );
 
   return (
    <View style={{ flex: 1, backgroundColor: "#fff"}}>
-<PanGestureHandler {...gestureHandler} >
-  <Animated.View
-  style={{ flex: 1, backgroundColor: "#fff", transform: [{ translateX }, { translateY }],}}
-  >
-  <View
+ <View
         style={{
          
           width: "100%",
@@ -168,8 +168,6 @@ useCode(
           </React.Fragment>
         )}
       />
-  </Animated.View>
-</PanGestureHandler>
    </View>
   );
 };

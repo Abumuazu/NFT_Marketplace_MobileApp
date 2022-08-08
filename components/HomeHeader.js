@@ -21,7 +21,7 @@ const HomeHeader = ({onSearch}) => {
       <Image
         source={assets.logo}
         resizeMode="contain"
-        style={{ width: 90, height: 25 }}
+        style={{ width: 80, height: 35, marginLeft: -15 }}
       />
 
       <View style={{ width: 45, height: 45 }}>

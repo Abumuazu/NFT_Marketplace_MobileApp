@@ -3,6 +3,11 @@ import React, { useLayoutEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import { COLORS, NFTData } from "../constants";
 import { FocusedStatusBar, HomeHeader, NFTCard } from "../components";
+import {
+  SharedElement,
+  SharedElementTransition,
+  nodeFromRef
+} from 'react-native-shared-element';
  
 const HomeScreen = ({navigation}) => {
 
@@ -24,7 +29,7 @@ const HomeScreen = ({navigation}) => {
   };
   const [nftData, setNftData] = useState(NFTData);
   const _renderItem= ({ item }) => <NFTCard data={item} navigation={navigation} />
-  const _ListHeaderComponent = <HomeHeader onSearch={_handleSearch}  />
+  const _ListHeaderComponent = <HomeHeader onSearch={_handleSearch} navigation={navigation}  />
  
   return (
     <>
